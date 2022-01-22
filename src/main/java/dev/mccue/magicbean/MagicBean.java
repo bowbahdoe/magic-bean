@@ -1,4 +1,4 @@
-package dev.mccue.magic_bean;
+package dev.mccue.magicbean;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -25,7 +25,13 @@ import java.lang.annotation.Target;
  *     <li> Has a non-private zero argument constructor </li>
  * </ul>
  *
- * Then a static method named <pre>of</pre> may be generated which
+ * Then a static method named <pre>of</pre> may be generated which provides an
+ * equivalent to an "all args constructor"
+ *
+ * If it makes sense to for your class you can also request equals/hashCode or toString
+ * implementations.
+ *
+ * Any of these extensions will make the generated interface instead be an abstract class.
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.SOURCE)

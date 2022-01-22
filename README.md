@@ -59,7 +59,7 @@ PRs welcome for
 
 #### I receive
 ```java
-import dev.mccue.magic_bean.MagicBean;
+import dev.mccue.magicbean.MagicBean;
 
 @MagicBean
 public final class Example implements ExampleBeanOps {
@@ -120,11 +120,10 @@ sealed interface ExampleBeanOps permits Example {
 
 #### I receive 
 ```java
-import dev.mccue.magic_bean.MagicBean;
+import dev.mccue.magicbean.MagicBean;
 
-// If you want equals/hashCode and/or toString
-// then an abstract class will be generated,
-// not an interface.
+// If you want equals/hashCode, toString, or a static factory
+// then an abstract class will be generated, not an interface.
 @MagicBean(
         generateAllArgsStaticFactory = true,
         generateEqualsAndHashCode = true,

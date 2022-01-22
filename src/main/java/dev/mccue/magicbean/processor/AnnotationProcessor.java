@@ -1,6 +1,6 @@
-package dev.mccue.magic_bean.processor;
+package dev.mccue.magicbean.processor;
 
-import dev.mccue.magic_bean.MagicBean;
+import dev.mccue.magicbean.MagicBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -215,7 +215,9 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     selfExpr = "((%s) this)".formatted(className);
                 }
 
-                boolean useAbstractClass = annotation.generateToString() || annotation.generateEqualsAndHashCode();
+                boolean useAbstractClass = annotation.generateAllArgsStaticFactory()
+                        || annotation.generateToString()
+                        || annotation.generateEqualsAndHashCode();
 
                 BiFunction<String, String, String> methodDefinition = (fieldType, fieldName) -> {
                     var pascalName = pascal(fieldName);
