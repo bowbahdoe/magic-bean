@@ -23,6 +23,24 @@
           <source>17</source>
           <target>17</target>
         </configuration>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <configuration>
+              <compilerArgument>-proc:none</compilerArgument>
+              <includes>
+                <include>dev/mccue/magic_bean/processor/AnnotationProcessor.java</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>compile-project</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>  <!-- Create sources.jar -->
