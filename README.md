@@ -19,28 +19,14 @@ Requires Java 17+.
 	    <groupId>dev.mccue</groupId>
 	    <artifactId>magic-bean</artifactId>
 	    <version>1.0.0</version>
+	    <scope>provided</scope>
 	</dependency>
-```
-### Gradle 
-
-```groovy
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-```groovy
-	dependencies {
-	        implementation 'dev.mccue:magic-bean:1.0.0'
-	}
 ```
 
 ### deps.edn
 ```edn
 {:mvn/repos {"jitpack" {:url "https://jitpack.io"}}
- :deps {dev.mccue/magic-bean {:mvn/version "1.0.0"}}}
+ :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "1.0.0"}}}}}
 ```
 
 ## What this does
