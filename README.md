@@ -41,12 +41,14 @@ The primary goals of this library are
 1. Boilerplate reduction for code that needs "dumb" POJOs
 2. Demonstrate that annotation processors and source code 
 generation aren't that scary
+3. Cover some of the use cases of [lombok](https://projectlombok.org/) without
+[the compiler hacking it does](https://github.com/projectlombok/lombok/issues/2681)
 
 The non-goals of this library are
-- To provide a tool which fits all use cases. (conflicts with goal #2)
-- Provide a way to generate immutable value objects. Use [records](https://dev.java/learn/using-record-to-model-immutable-data/),
+1. To provide a tool which fits all use cases. (conflicts with goal #2)
+2. Provide a way to generate immutable value objects. Use [records](https://dev.java/learn/using-record-to-model-immutable-data/),
 [immutables](https://immutables.github.io/), or elbow grease for that.
-- Support old Java versions.
+3. Support old Java versions.
 
 PRs welcome for
 - carrying over annotations to generated get and set methods.
@@ -58,8 +60,9 @@ PRs welcome for
 #### I receive
 ```java
 import dev.mccue.magic_bean.MagicBean;
+
 @MagicBean
-public final class Example extends ExampleBeanOps {
+public final class Example implements ExampleBeanOps {
     int x;
     String name;
     List<String> strs;
