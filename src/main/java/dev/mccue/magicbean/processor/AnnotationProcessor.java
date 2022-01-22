@@ -17,7 +17,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
-@SupportedAnnotationTypes("dev.mccue.magic_bean.MagicBean")
+@SupportedAnnotationTypes("dev.mccue.magicbean.MagicBean")
 @SupportedSourceVersion(SourceVersion.RELEASE_17)
 public final class AnnotationProcessor extends AbstractProcessor {
     private String pascal(String s) {
