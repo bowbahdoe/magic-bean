@@ -126,7 +126,7 @@ import dev.mccue.magic_bean.MagicBean;
 // then an abstract class will be generated,
 // not an interface.
 @MagicBean(
-        generateAllArgsStaticFactory=true,
+        generateAllArgsStaticFactory = true,
         generateEqualsAndHashCode = true,
         generateToString = true
 )
