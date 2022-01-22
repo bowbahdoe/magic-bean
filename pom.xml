@@ -6,7 +6,7 @@
 
   <groupId>dev.mccue</groupId>
   <artifactId>magic-bean</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.1</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -29,7 +29,7 @@
             <configuration>
               <compilerArgument>-proc:none</compilerArgument>
               <includes>
-                <include>dev/mccue/magic_bean/processor/AnnotationProcessor.java</include>
+                <include>dev/mccue/magicbean/processor/AnnotationProcessor.java</include>
               </includes>
             </configuration>
           </execution>
