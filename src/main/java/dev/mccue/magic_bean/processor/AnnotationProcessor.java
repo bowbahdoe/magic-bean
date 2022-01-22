@@ -35,6 +35,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
         for (int i = 0; i < fields.size(); i++) {
             var field = fields.get(i);
+
             staticFactoryMethod.append("        ");
             staticFactoryMethod.append(field.asType());
             staticFactoryMethod.append(" ");
@@ -156,7 +157,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                         if (modifiers.contains(Modifier.FINAL)) {
                             messager.printMessage(
                                     Diagnostic.Kind.ERROR,
-                                    "Magic beans are not allowed to have any private non-static fields",
+                                    "Magic beans are not allowed to have any final non-static fields",
                                     element
                             );
 
@@ -183,10 +184,12 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                 constructor.getParameters().size() == 0 &&
                                         !constructor.getModifiers().contains(Modifier.PRIVATE)
                         );
-                if (!hasValidConstructor) {
+
+                var annotation = typeElement.getAnnotation(MagicBean.class);
+                if (annotation.generateAllArgsStaticFactory() && !hasValidConstructor) {
                     messager.printMessage(
                             Diagnostic.Kind.ERROR,
-                            "Magic beans need to have a non-private zero arg constructor",
+                            "Magic beans need to have a non-private zero arg constructor in order for a factory method to be generated.",
                             element
                     );
                     return true;
@@ -212,8 +215,6 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     selfExpr = "((%s) this)".formatted(className);
                 }
 
-
-                var annotation = typeElement.getAnnotation(MagicBean.class);
                 boolean useAbstractClass = annotation.generateToString() || annotation.generateEqualsAndHashCode();
 
                 BiFunction<String, String, String> methodDefinition = (fieldType, fieldName) -> {
