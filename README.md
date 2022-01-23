@@ -19,7 +19,7 @@ Requires Java 17+.
 	<dependency>
 	    <groupId>dev.mccue</groupId>
 	    <artifactId>magic-bean</artifactId>
-	    <version>2.0.0</version>
+	    <version>2.0.1</version>
 	    <scope>provided</scope>
 	</dependency>
 ```
@@ -27,7 +27,7 @@ Requires Java 17+.
 ### deps.edn
 ```edn
 {:mvn/repos {"jitpack" {:url "https://jitpack.io"}}
- :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "2.0.0"}}}}}
+ :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "2.0.1"}}}}}
 ```
 
 ## What this does
