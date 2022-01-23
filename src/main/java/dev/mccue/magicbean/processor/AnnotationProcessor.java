@@ -62,10 +62,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
         equalsAndHashCodeMethods.append("""
                             @Override
                             public boolean equals(Object o) {
-                                if (o == null) {
-                                    return false;
-                                }
-                                else if (!(o instanceof %s other)) {
+                                if (o == null || !(o instanceof %s other)) {
                                     return false;
                                 }
                                 else {
@@ -218,6 +215,17 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 boolean useAbstractClass = annotation.generateAllArgsStaticFactory()
                         || annotation.generateToString()
                         || annotation.generateEqualsAndHashCode();
+
+                boolean requiresFinalClass = annotation.generateEqualsAndHashCode();
+
+                if (requiresFinalClass && !typeElement.getModifiers().contains(Modifier.FINAL)) {
+                    messager.printMessage(
+                            Diagnostic.Kind.ERROR,
+                            "In order to use the automatic equals and hash code, a magic bean must be final.",
+                            element
+                    );
+                    return true;
+                }
 
                 BiFunction<String, String, String> methodDefinition = (fieldType, fieldName) -> {
                     var pascalName = pascal(fieldName);
