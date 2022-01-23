@@ -225,7 +225,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                 /**
                                  * Get the current value for %s.
                                  */
-                                %s %s get%s() {
+                                %s %s %s%s() {
                                     return %s.%s;
                                 }
                                 
@@ -238,7 +238,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                 
                             """.formatted(
                             fieldName,
-                            useAbstractClass ? "public" : "default", fieldType, pascalName,
+                            useAbstractClass ? "public" : "default", fieldType, fieldType.equals("boolean") ? "is" : "get", pascalName,
                             selfExpr, fieldName,
                             fieldName,
                             useAbstractClass ? "public" : "default", pascalName, fieldType, fieldName,
