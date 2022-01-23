@@ -254,7 +254,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                 
                             """.formatted(
                             fieldName,
-                            useAbstractClass ? "public" : "default", fieldType, fieldType.equals("boolean") ? "is" : "get", pascalName,
+                            useAbstractClass ? "public" : "default", fieldType, Set.of("boolean", "java.lang.Boolean").contains(fieldType) ? "is" : "get", pascalName,
                             selfExpr, fieldName,
                             fieldName,
                             useAbstractClass ? "public" : "default", pascalName, fieldType, fieldName,
