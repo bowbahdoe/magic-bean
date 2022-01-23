@@ -263,7 +263,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 };
 
 
-                var packageDecl = "package " + enclosingElement + ";\n\n";
+                var packageDecl = packageName == null ? "" : "package " + packageName + ";\n\n";
 
 
                 String classDeclStart;
