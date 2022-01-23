@@ -204,6 +204,14 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     return true;
                 }
 
+                String packageName;
+                if (packageElement.isUnnamed()) {
+                    packageName = null;
+                }
+                else {
+                    packageName = packageElement.toString();
+                }
+
 
                 String selfExpr;
                 if (typeElement.getAnnotation(MagicBean.class).useTypeSafeCast()) {
@@ -298,7 +306,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
                 try {
                     var file = filer.createSourceFile(
-                            packageElement + "." + className + "BeanOps",
+                            (packageName == null ? "" : packageName + ".") + className + "BeanOps",
                             element
                     );
                     try (var writer = file.openWriter()) {
