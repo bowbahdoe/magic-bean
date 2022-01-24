@@ -7,21 +7,21 @@ Requires Java 17+.
 
 ### Maven
 ```xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
 ```xml 
-	<dependency>
-	    <groupId>dev.mccue</groupId>
-	    <artifactId>magic-bean</artifactId>
-	    <version>2.0.2</version>
-	    <scope>provided</scope>
-	</dependency>
+<dependency>
+    <groupId>dev.mccue</groupId>
+    <artifactId>magic-bean</artifactId>
+    <version>2.0.2</version>
+    <scope>provided</scope>
+</dependency>
 ```
 
 ### deps.edn
@@ -61,6 +61,8 @@ PRs welcome for
 #### I receive
 ```java
 import dev.mccue.magicbean.MagicBean;
+
+import java.util.List;
 
 @MagicBean
 public final class Example implements ExampleBeanOps {
@@ -123,6 +125,8 @@ sealed interface ExampleBeanOps permits Example {
 ```java
 import dev.mccue.magicbean.MagicBean;
 
+import java.util.List;
+
 // If you want equals/hashCode, toString, or a static factory
 // then an abstract class will be generated, not an interface.
 @MagicBean(
@@ -135,6 +139,7 @@ public final class Example extends ExampleBeanOps {
     String name;
     List<String> strs;
 }
+
 ```
 
 #### You receive
@@ -200,10 +205,7 @@ sealed abstract class ExampleBeanOps permits Example {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        else if (!(o instanceof Example other)) {
+        if (o == null || !(o instanceof Example other)) {
             return false;
         }
         else {
