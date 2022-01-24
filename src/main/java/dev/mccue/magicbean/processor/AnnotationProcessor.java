@@ -14,7 +14,9 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @SupportedAnnotationTypes("dev.mccue.magicbean.MagicBean")
@@ -24,7 +26,11 @@ public final class AnnotationProcessor extends AbstractProcessor {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
-    private String staticFactoryMethod(Name className, List<VariableElement> fields) {
+    private String fqnForFieldType(Types typeUtils, VariableElement field) {
+        return ((TypeElement) typeUtils.asElement(field.asType())).getQualifiedName().toString();
+    }
+
+    private String staticFactoryMethod(Types typeUtils, Name className, List<VariableElement> fields) {
         var staticFactoryMethod = new StringBuilder();
         staticFactoryMethod.append("""
                     /**
@@ -37,7 +43,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
             var field = fields.get(i);
 
             staticFactoryMethod.append("        ");
-            staticFactoryMethod.append(field.asType());
+            staticFactoryMethod.append(fqnForFieldType(typeUtils, field));
             staticFactoryMethod.append(" ");
             staticFactoryMethod.append(field.getSimpleName());
             if (i != fields.size() - 1) {
@@ -126,6 +132,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
         var filer = this.processingEnv.getFiler();
         var messager = this.processingEnv.getMessager();
         var elementUtils = this.processingEnv.getElementUtils();
+        var typeUtils = this.processingEnv.getTypeUtils();
 
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(MagicBean.class);
         for (var element : elements) {
@@ -284,12 +291,12 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 classDecl.append(classDeclStart);
 
                 if (annotation.generateAllArgsStaticFactory()) {
-                    classDecl.append(staticFactoryMethod(className, fields));
+                    classDecl.append(staticFactoryMethod(typeUtils, className, fields));
                 }
 
                 for (var field : fields) {
                     classDecl.append(methodDefinition.apply(
-                            field.asType().toString(),
+                            fqnForFieldType(typeUtils, field),
                             field.getSimpleName().toString()
                     ));
                 }
