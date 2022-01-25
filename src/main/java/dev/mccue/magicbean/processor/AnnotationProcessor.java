@@ -72,39 +72,67 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                         
                         """.formatted(
                         className,
-                        fields.stream()
-                                .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
-                                        selfExpr,
-                                        field.getSimpleName(),
-                                        field.getSimpleName()
-                                ))
-                                .collect(Collectors.joining(" && \n                   "))
+                        createEqualsExpressions(selfExpr, fields)
                 )
         );
         equalsAndHashCodeMethods.append("""
                             @Override
                             public int hashCode() {
-                                return java.util.Objects.hash(
-                                  %s
-                                );
+                                %s
                             }
                         
                         """.formatted(
-                        fields.stream()
-                                .map(field -> "      " + selfExpr + "." + field.getSimpleName())
-                                .collect(Collectors.joining(",\n          "))
+                        createHashMethodBody(selfExpr, fields)
                 )
         );
         return equalsAndHashCodeMethods.toString();
+    }
+
+    private String createEqualsExpressions(String selfExpr, List<VariableElement> fields) {
+        if (fields.isEmpty())
+            return "super.equals(o)";
+
+        return fields.stream()
+                .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
+                        selfExpr,
+                        field.getSimpleName(),
+                        field.getSimpleName()
+                ))
+                .collect(Collectors.joining(" && \n                   "));
+    }
+
+    private String createHashMethodBody(String selfExpr, List<VariableElement> fields) {
+        if (fields.isEmpty())
+            return "return super.hashCode();";
+
+        return """
+                return java.util.Objects.hash(
+                                  %s
+                                );
+                """.formatted(
+                fields.stream()
+                        .map(field -> "      " + selfExpr + "." + field.getSimpleName())
+                        .collect(Collectors.joining(",\n          ")));
     }
 
     private String toStringMethod(String selfExpr, Name className, List<VariableElement> fields) {
         return """
                     @Override
                     public String toString() {
-                        return "%s[" + %s + "]";
+                        %s
                     }
-                
+                                
+                """.formatted(
+                createToStringMethodBody(selfExpr, className, fields)
+        );
+    }
+
+    private String createToStringMethodBody(String selfExpr, Name className, List<VariableElement> fields) {
+        if (fields.isEmpty())
+            return "return super.toString();";
+
+        return """
+                return "%s[" + %s + "]";
                 """.formatted(
                 className,
                 fields.stream()
@@ -114,8 +142,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                         selfExpr + "." + field.getSimpleName()
                                 )
                         )
-                        .collect(Collectors.joining(" +\n                     \", \" + "))
-        );
+                        .collect(Collectors.joining(" +\n                     \", \" + ")));
     }
 
     @Override
