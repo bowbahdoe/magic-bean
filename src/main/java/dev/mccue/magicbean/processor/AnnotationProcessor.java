@@ -90,7 +90,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
     private String createEqualsExpression(String selfExpr, List<VariableElement> fields) {
         if (fields.isEmpty()) {
-            return "super.equals(o)";
+            return "true";
         }
         else {
             return fields.stream()
@@ -105,7 +105,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
     private String createHashCodeMethodBody(String selfExpr, List<VariableElement> fields) {
         if (fields.isEmpty()) {
-            return "return super.hashCode();";
+            return "return 1;";
         }
         else {
             return """
