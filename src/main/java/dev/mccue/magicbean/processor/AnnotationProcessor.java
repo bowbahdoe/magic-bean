@@ -82,7 +82,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                             }
                         
                         """.formatted(
-                        createHashMethodBody(selfExpr, fields)
+                        createHashCodeMethodBody(selfExpr, fields)
                 )
         );
         return equalsAndHashCodeMethods.toString();
@@ -103,7 +103,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
         }
     }
 
-    private String createHashMethodBody(String selfExpr, List<VariableElement> fields) {
+    private String createHashCodeMethodBody(String selfExpr, List<VariableElement> fields) {
         if (fields.isEmpty()) {
             return "return super.hashCode();";
         }
