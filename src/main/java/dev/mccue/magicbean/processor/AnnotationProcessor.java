@@ -72,7 +72,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                         
                         """.formatted(
                         className,
-                        createEqualsExpressions(selfExpr, fields)
+                        createEqualsExpression(selfExpr, fields)
                 )
         );
         equalsAndHashCodeMethods.append("""
@@ -88,31 +88,35 @@ public final class AnnotationProcessor extends AbstractProcessor {
         return equalsAndHashCodeMethods.toString();
     }
 
-    private String createEqualsExpressions(String selfExpr, List<VariableElement> fields) {
-        if (fields.isEmpty())
+    private String createEqualsExpression(String selfExpr, List<VariableElement> fields) {
+        if (fields.isEmpty()) {
             return "super.equals(o)";
-
-        return fields.stream()
-                .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
-                        selfExpr,
-                        field.getSimpleName(),
-                        field.getSimpleName()
-                ))
-                .collect(Collectors.joining(" && \n                   "));
+        }
+        else {
+            return fields.stream()
+                    .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
+                            selfExpr,
+                            field.getSimpleName(),
+                            field.getSimpleName()
+                    ))
+                    .collect(Collectors.joining(" && \n                   "));
+        }
     }
 
     private String createHashMethodBody(String selfExpr, List<VariableElement> fields) {
-        if (fields.isEmpty())
+        if (fields.isEmpty()) {
             return "return super.hashCode();";
-
-        return """
-                return java.util.Objects.hash(
-                                  %s
-                                );
-                """.formatted(
-                fields.stream()
-                        .map(field -> "      " + selfExpr + "." + field.getSimpleName())
-                        .collect(Collectors.joining(",\n          ")));
+        }
+        else {
+            return """
+                    return java.util.Objects.hash(
+                                      %s
+                                    );
+                    """.formatted(
+                    fields.stream()
+                            .map(field -> "      " + selfExpr + "." + field.getSimpleName())
+                            .collect(Collectors.joining(",\n          ")));
+        }
     }
 
     private String toStringMethod(String selfExpr, Name className, List<VariableElement> fields) {
@@ -128,21 +132,26 @@ public final class AnnotationProcessor extends AbstractProcessor {
     }
 
     private String createToStringMethodBody(String selfExpr, Name className, List<VariableElement> fields) {
-        if (fields.isEmpty())
-            return "return super.toString();";
-
-        return """
-                return "%s[" + %s + "]";
-                """.formatted(
-                className,
-                fields.stream()
-                        .map(field ->
-                                "\"%s=\" + %s".formatted(
-                                        field.getSimpleName(),
-                                        selfExpr + "." + field.getSimpleName()
-                                )
-                        )
-                        .collect(Collectors.joining(" +\n                     \", \" + ")));
+        if (fields.isEmpty()) {
+            return """
+                    return "%s[]";
+                    """.formatted(
+                    className);
+        }
+        else {
+            return """
+                    return "%s[" + %s + "]";
+                    """.formatted(
+                    className,
+                    fields.stream()
+                            .map(field ->
+                                    "\"%s=\" + %s".formatted(
+                                            field.getSimpleName(),
+                                            selfExpr + "." + field.getSimpleName()
+                                    )
+                            )
+                            .collect(Collectors.joining(" +\n                     \", \" + ")));
+        }
     }
 
     @Override
