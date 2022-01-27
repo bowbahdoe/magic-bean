@@ -72,50 +72,82 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                         
                         """.formatted(
                         className,
-                        fields.stream()
-                                .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
-                                        selfExpr,
-                                        field.getSimpleName(),
-                                        field.getSimpleName()
-                                ))
-                                .collect(Collectors.joining(" && \n                   "))
+                        createEqualsExpression(selfExpr, fields)
                 )
         );
         equalsAndHashCodeMethods.append("""
                             @Override
                             public int hashCode() {
-                                return java.util.Objects.hash(
-                                  %s
-                                );
+                                %s
                             }
                         
                         """.formatted(
-                        fields.stream()
-                                .map(field -> "      " + selfExpr + "." + field.getSimpleName())
-                                .collect(Collectors.joining(",\n          "))
+                        createHashCodeMethodBody(selfExpr, fields)
                 )
         );
         return equalsAndHashCodeMethods.toString();
+    }
+
+    private String createEqualsExpression(String selfExpr, List<VariableElement> fields) {
+        if (fields.isEmpty()) {
+            return "true";
+        }
+        else {
+            return fields.stream()
+                    .map(field -> "java.util.Objects.equals(%s.%s, other.%s)".formatted(
+                            selfExpr,
+                            field.getSimpleName(),
+                            field.getSimpleName()
+                    ))
+                    .collect(Collectors.joining(" && \n                   "));
+        }
+    }
+
+    private String createHashCodeMethodBody(String selfExpr, List<VariableElement> fields) {
+        if (fields.isEmpty()) {
+            return "return 1;";
+        }
+        else {
+            return """
+                    return java.util.Objects.hash(
+                              %s
+                            );""".formatted(
+                    fields.stream()
+                            .map(field -> "      " + selfExpr + "." + field.getSimpleName())
+                            .collect(Collectors.joining(",\n          ")));
+        }
     }
 
     private String toStringMethod(String selfExpr, Name className, List<VariableElement> fields) {
         return """
                     @Override
                     public String toString() {
-                        return "%s[" + %s + "]";
+                        %s
                     }
-                
+                                
                 """.formatted(
-                className,
-                fields.stream()
-                        .map(field ->
-                                "\"%s=\" + %s".formatted(
-                                        field.getSimpleName(),
-                                        selfExpr + "." + field.getSimpleName()
-                                )
-                        )
-                        .collect(Collectors.joining(" +\n                     \", \" + "))
+                createToStringMethodBody(selfExpr, className, fields)
         );
+    }
+
+    private String createToStringMethodBody(String selfExpr, Name className, List<VariableElement> fields) {
+        if (fields.isEmpty()) {
+            return "return \"%s[]\"; "
+                    .formatted(className);
+        }
+        else {
+            return "return \"%s[\" + %s + \"]\";"
+                    .formatted(
+                    className,
+                    fields.stream()
+                            .map(field ->
+                                    "\"%s=\" + %s".formatted(
+                                            field.getSimpleName(),
+                                            selfExpr + "." + field.getSimpleName()
+                                    )
+                            )
+                            .collect(Collectors.joining(" +\n                     \", \" + ")));
+        }
     }
 
     @Override
