@@ -110,9 +110,8 @@ public final class AnnotationProcessor extends AbstractProcessor {
         else {
             return """
                     return java.util.Objects.hash(
-                                      %s
-                                    );
-                    """.formatted(
+                              %s
+                            );""".formatted(
                     fields.stream()
                             .map(field -> "      " + selfExpr + "." + field.getSimpleName())
                             .collect(Collectors.joining(",\n          ")));
@@ -133,15 +132,12 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
     private String createToStringMethodBody(String selfExpr, Name className, List<VariableElement> fields) {
         if (fields.isEmpty()) {
-            return """
-                    return "%s[]";
-                    """.formatted(
-                    className);
+            return "return \"%s[]\"; "
+                    .formatted(className);
         }
         else {
-            return """
-                    return "%s[" + %s + "]";
-                    """.formatted(
+            return "return \"%s[\" + %s + \"]\";"
+                    .formatted(
                     className,
                     fields.stream()
                             .map(field ->
