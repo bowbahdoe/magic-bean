@@ -266,14 +266,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 var packageDecl = packageName == null ? "" : "package " + packageName + ";\n\n";
 
 
-                String classDeclStart;
-                if (useAbstractClass) {
-                    classDeclStart = "sealed abstract class %s permits %s {\n\n";
-                } else {
-                    classDeclStart = "sealed interface %s permits %s {\n\n";
-                }
-
-                classDeclStart = classDeclStart.formatted(
+                String classDeclStart = "sealed abstract class %s permits %s {\n\n".formatted(
                         className + "BeanOps", className
                 );
 
