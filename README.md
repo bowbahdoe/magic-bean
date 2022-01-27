@@ -19,7 +19,7 @@ Requires Java 17+.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>2.0.2</version>
+    <version>3.0.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -27,7 +27,7 @@ Requires Java 17+.
 ### deps.edn
 ```edn
 {:mvn/repos {"jitpack" {:url "https://jitpack.io"}}
- :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "2.0.2"}}}}}
+ :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "3.0.0"}}}}}
 ```
 
 ## What this does
@@ -65,7 +65,7 @@ import dev.mccue.magicbean.MagicBean;
 import java.util.List;
 
 @MagicBean
-public final class Example implements ExampleBeanOps {
+public final class Example extends ExampleBeanOps {
     int x;
     String name;
     List<String> strs;
@@ -74,48 +74,50 @@ public final class Example implements ExampleBeanOps {
 
 #### You receive
 ```java
-sealed interface ExampleBeanOps permits Example {
+sealed abstract class ExampleBeanOps permits Example {
+
     /**
      * Get the current value for x.
      */
-    default int getX() {
+    public int getX() {
         return ((Example) this).x;
     }
 
     /**
      * Set the current value for x.
      */
-    default void setX(int x) {
+    public void setX(int x) {
         ((Example) this).x = x;
     }
 
     /**
      * Get the current value for name.
      */
-    default java.lang.String getName() {
+    public java.lang.String getName() {
         return ((Example) this).name;
     }
 
     /**
      * Set the current value for name.
      */
-    default void setName(java.lang.String name) {
+    public void setName(java.lang.String name) {
         ((Example) this).name = name;
     }
 
     /**
      * Get the current value for strs.
      */
-    default java.util.List<java.lang.String> getStrs() {
+    public java.util.List<java.lang.String> getStrs() {
         return ((Example) this).strs;
     }
 
     /**
      * Set the current value for strs.
      */
-    default void setStrs(java.util.List<java.lang.String> strs) {
+    public void setStrs(java.util.List<java.lang.String> strs) {
         ((Example) this).strs = strs;
     }
+    
 }
 ```
 
@@ -127,8 +129,6 @@ import dev.mccue.magicbean.MagicBean;
 
 import java.util.List;
 
-// If you want equals/hashCode, toString, or a static factory
-// then an abstract class will be generated, not an interface.
 @MagicBean(
         generateAllArgsStaticFactory = true,
         generateEqualsAndHashCode = true,
