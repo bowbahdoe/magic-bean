@@ -252,10 +252,6 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     selfExpr = "((%s) this)".formatted(className);
                 }
 
-                boolean useAbstractClass = annotation.generateAllArgsStaticFactory()
-                        || annotation.generateToString()
-                        || annotation.generateEqualsAndHashCode();
-
                 boolean requiresFinalClass = annotation.generateEqualsAndHashCode();
 
                 if (requiresFinalClass && !typeElement.getModifiers().contains(Modifier.FINAL)) {
@@ -273,23 +269,23 @@ public final class AnnotationProcessor extends AbstractProcessor {
                                 /**
                                  * Get the current value for %s.
                                  */
-                                %s %s %s%s() {
+                                public %s %s%s() {
                                     return %s.%s;
                                 }
                                 
                                 /**
                                  * Set the current value for %s.
                                  */
-                                %s void set%s(%s %s) {
+                                public void set%s(%s %s) {
                                     %s.%s = %s;
                                 }
                                 
                             """.formatted(
                             fieldName,
-                            useAbstractClass ? "public" : "default", fieldType, Set.of("boolean", "java.lang.Boolean").contains(fieldType) ? "is" : "get", pascalName,
+                            fieldType, Set.of("boolean", "java.lang.Boolean").contains(fieldType) ? "is" : "get", pascalName,
                             selfExpr, fieldName,
                             fieldName,
-                            useAbstractClass ? "public" : "default", pascalName, fieldType, fieldName,
+                             pascalName, fieldType, fieldName,
                             selfExpr, fieldName, fieldName
                     );
                 };
