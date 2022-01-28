@@ -6,6 +6,7 @@ A very basic library which will generate POJOs.
 Requires Java 17+.
 
 ### Maven
+<details>
 ```xml
 <repositories>
     <repository>
@@ -14,21 +15,8 @@ Requires Java 17+.
     </repository>
 </repositories>
 ```
+</details>
 
-```xml 
-<dependency>
-    <groupId>dev.mccue</groupId>
-    <artifactId>magic-bean</artifactId>
-    <version>3.0.0</version>
-    <scope>provided</scope>
-</dependency>
-```
-
-### deps.edn
-```edn
-{:mvn/repos {"jitpack" {:url "https://jitpack.io"}}
- :aliases   {:compile {:deps {dev.mccue/magic-bean {:mvn/version "3.0.0"}}}}}
-```
 
 ## What this does
 This uses an annotation processor to generate a class which can
@@ -233,6 +221,9 @@ sealed abstract class ExampleBeanOps permits Example {
 
 }
 ```
+
+## Usage with frameworks
+### [JPA / Hibernate](./usage/jpa.md)
 
 
 ## Customizing
