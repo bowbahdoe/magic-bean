@@ -27,7 +27,7 @@ of accessing them only through the getters.
 There are some caveats with making a toString for an entity. Make sure to read up 
 [here](https://struberg.wordpress.com/2016/10/15/tostring-equals-and-hashcode-in-jpa-entities/).
 
-Likely you will want to write this yourself or not writing one at all.
+Likely you will want to write this yourself or not write one at all.
 
 ## 5. Override methods as needed.
 
