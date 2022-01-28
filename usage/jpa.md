@@ -45,7 +45,7 @@ import dev.mccue.magicbean.MagicBean;
 
 @Entity
 @Table(name = "employees")
-@MagicBean(generateToString = true)
+@MagicBean
 public non-sealed class Employee extends EmployeeBeanOps {
 
     @Id
