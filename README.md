@@ -7,6 +7,7 @@ Requires Java 17+.
 
 ### Maven
 <details>
+
 ```xml
 <repositories>
     <repository>
@@ -14,6 +15,14 @@ Requires Java 17+.
         <url>https://jitpack.io</url>
     </repository>
 </repositories>
+```
+```xml
+<dependency>
+    <groupId>dev.mccue</groupId>
+    <artifactId>magic-bean</artifactId>
+    <version>2.0.2</version>
+    <scope>provided</scope>
+</dependency>
 ```
 </details>
 
