@@ -294,7 +294,8 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 var packageDecl = packageName == null ? "" : "package " + packageName + ";\n\n";
 
 
-                String classDeclStart = "sealed abstract class %s permits %s {\n\n".formatted(
+                var classDeclStart = "@javax.annotation.processing.Generated(\"dev.mccue.magicbean.processor.AnnotationProcessor\")\n";
+                classDeclStart += "sealed abstract class %s permits %s {\n\n".formatted(
                         className + "BeanOps", className
                 );
 
