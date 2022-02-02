@@ -177,7 +177,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                             messager.printMessage(
                                     Diagnostic.Kind.ERROR,
                                     "Magic beans are not allowed to have any private non-static fields",
-                                    element
+                                    field
                             );
 
                             return true;
@@ -187,7 +187,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                             messager.printMessage(
                                     Diagnostic.Kind.ERROR,
                                     "Magic beans are not allowed to have any final non-static fields",
-                                    element
+                                    field
                             );
 
                             return true;
@@ -199,7 +199,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                         messager.printMessage(
                                 Diagnostic.Kind.ERROR,
                                 "Unsupported type for a field: " + fieldType,
-                                element
+                                field
                         );
 
                         return true;
