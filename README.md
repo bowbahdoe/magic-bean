@@ -236,6 +236,6 @@ sealed abstract class ExampleBeanOps permits Example {
 
 
 ## Customizing
-This library is just over 300 lines of Java contained within a single file.
+This library is just about 350 lines of Java contained within a single file.
 If it doesn't do exactly what you want, feel free to make a PR or fork and
 make your own edits.
