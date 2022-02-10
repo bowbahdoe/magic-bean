@@ -13,14 +13,23 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <name>Magic Bean</name>
+  <description>A very basic library which will generate POJOs.</description>
+  <url>https://github.com/bowbahdoe/magic-bean</url>
+
   <developers>
     <developer>
       <name>Ethan McCue</name>
       <email>ethan@mccue.dev</email>
-      <organization>McCue Software Solutions</organization>
-      <organizationUrl>https://www.mccue.dev</organizationUrl>
     </developer>
   </developers>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
 
   <distributionManagement>
     <snapshotRepository>
