@@ -21,6 +21,8 @@
     <developer>
       <name>Ethan McCue</name>
       <email>ethan@mccue.dev</email>
+      <organization>McCue Software Solutions</organization>
+      <organizationUrl>https://www.mccue.dev</organizationUrl>
     </developer>
   </developers>
 
@@ -30,6 +32,12 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/bowbahdoe/magic-bean.git</connection>
+    <developerConnection>scm:git:ssh://github.com:bowbahdoe/magic-bean.git</developerConnection>
+    <url>http://github.com/bowbahdoe/magic-bean/tree/master</url>
+  </scm>
 
   <distributionManagement>
     <snapshotRepository>
