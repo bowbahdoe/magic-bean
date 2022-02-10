@@ -1,5 +1,4 @@
 # Magic Bean
-[![](https://jitpack.io/v/dev.mccue/magic-bean.svg)](https://jitpack.io/#dev.mccue/magic-bean)
 
 A very basic library which will generate POJOs. 
 
