@@ -17,6 +17,9 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
+/**
+ * Annotation processor that handles MagicBean annotations.
+ */
 @SupportedAnnotationTypes("dev.mccue.magicbean.MagicBean")
 @SupportedSourceVersion(SourceVersion.RELEASE_17)
 public final class AnnotationProcessor extends AbstractProcessor {
