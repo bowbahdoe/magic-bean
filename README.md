@@ -6,25 +6,15 @@ A very basic library which will generate POJOs.
 Requires Java 17+.
 
 ### Maven
-<details>
 
-```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
 ```xml
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>3.0.2</version>
+    <version>3.1.0</version>
     <scope>provided</scope>
 </dependency>
 ```
-</details>
 
 
 ## What this does
