@@ -26,7 +26,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
     @Override
     public SourceVersion getSupportedSourceVersion() {
         return Collections.max(
-                List.of(SourceVersion.latestSupported(),
+                List.of(SourceVersion.latest(),
                         SourceVersion.RELEASE_17)
         );
     }
