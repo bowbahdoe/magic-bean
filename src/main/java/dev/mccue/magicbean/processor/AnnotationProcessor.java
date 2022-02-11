@@ -3,6 +3,8 @@ package dev.mccue.magicbean.processor;
 import dev.mccue.magicbean.MagicBean;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -20,9 +22,20 @@ import javax.tools.Diagnostic;
 /**
  * Annotation processor that handles MagicBean annotations.
  */
-@SupportedAnnotationTypes("dev.mccue.magicbean.MagicBean")
-@SupportedSourceVersion(SourceVersion.RELEASE_17)
 public final class AnnotationProcessor extends AbstractProcessor {
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return Collections.max(
+                List.of(SourceVersion.latestSupported(),
+                        SourceVersion.RELEASE_17)
+        );
+    }
+
+    @Override
+    public Set<String> getSupportedAnnotationTypes() {
+        return Set.of("dev.mccue.magicbean.MagicBean");
+    }
+
     private String pascal(String s) {
         return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
