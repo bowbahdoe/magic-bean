@@ -1,5 +1,7 @@
 # Magic Bean
 
+<img src="./logo.png"></img>
+
 A very basic library which will generate POJOs. 
 
 Requires Java 17+.
@@ -10,7 +12,7 @@ Requires Java 17+.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -36,9 +38,6 @@ The non-goals of this library are
 2. Provide a way to generate immutable value objects. Use [records](https://dev.java/learn/using-record-to-model-immutable-data/),
 [immutables](https://immutables.github.io/), or elbow grease for that.
 3. Support old Java versions.
-
-PRs welcome for
-- carrying over annotations to generated get and set methods.
 
 ## Usage
 

@@ -25,10 +25,7 @@ import javax.tools.Diagnostic;
 public final class AnnotationProcessor extends AbstractProcessor {
     @Override
     public SourceVersion getSupportedSourceVersion() {
-        return Collections.max(
-                List.of(SourceVersion.latest(),
-                        SourceVersion.RELEASE_17)
-        );
+        return SourceVersion.latest();
     }
 
     @Override
