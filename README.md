@@ -17,6 +17,15 @@ Requires Java 17+.
 </dependency>
 ```
 
+### Gradle
+
+```
+dependencies {
+    compileOnly("dev.mccue:magic-bean:3.1.1")
+    annotationProcessor("dev.mccue:magic-bean:3.1.1")
+}
+```
+
 
 ## What this does
 This uses an annotation processor to generate a class which can
