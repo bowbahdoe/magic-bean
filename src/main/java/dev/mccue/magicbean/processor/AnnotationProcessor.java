@@ -3,18 +3,15 @@ package dev.mccue.magicbean.processor;
 import dev.mccue.magicbean.MagicBean;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
@@ -308,8 +305,18 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
 
                 var classDeclStart = "@javax.annotation.processing.Generated(\"dev.mccue.magicbean.processor.AnnotationProcessor\")\n";
-                classDeclStart += "sealed abstract class %s permits %s {\n\n".formatted(
-                        className + "BeanOps", className
+
+                String extendClass;
+                try {
+                    extendClass = annotation.extend().toString();
+                } catch (MirroredTypeException e) {
+                    extendClass = e.getTypeMirror().toString();
+                }
+
+                classDeclStart += "sealed abstract class %s extends %s permits %s {\n\n".formatted(
+                        className + "BeanOps",
+                        extendClass,
+                        className
                 );
 
                 var classDeclEnd = "}";

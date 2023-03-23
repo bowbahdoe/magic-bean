@@ -48,6 +48,11 @@ import java.lang.annotation.Target;
  *
  * <p>
  * You may also request a default implementation of toString which includes every field.
+ *
+ * <p>
+ *     The generated class can also extend another class provided that other class is extensible
+ *     and has a zero arg constructor.
+ * </p>
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.SOURCE)
@@ -73,4 +78,11 @@ public @interface MagicBean {
      * @return Whether to generate a basic toString.
      */
     boolean generateToString() default false;
+
+    /**
+     * @return A class for the generated abstract class to extend. Does not support
+     * providing type parameters to generic classes or extending classes which do not have a
+     * zero arg constructor.
+     */
+    Class<?> extend() default Object.class;
 }
