@@ -342,7 +342,6 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     classDecl.append(toStringMethod(selfExpr, className, fields));
                 }
 
-                Optional
                 classDecl.append(classDeclEnd);
 
                 try {
