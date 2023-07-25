@@ -4,6 +4,7 @@ import dev.mccue.magicbean.MagicBean;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -303,9 +304,6 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
                 var packageDecl = packageName == null ? "" : "package " + packageName + ";\n\n";
 
-
-                var classDeclStart = "@javax.annotation.processing.Generated(\"dev.mccue.magicbean.processor.AnnotationProcessor\")\n";
-
                 String extendClass;
                 try {
                     extendClass = annotation.extend().toString();
@@ -313,7 +311,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     extendClass = e.getTypeMirror().toString();
                 }
 
-                classDeclStart += "sealed abstract class %s extends %s permits %s {\n\n".formatted(
+                var classDeclStart = "sealed abstract class %s extends %s permits %s {\n\n".formatted(
                         className + "BeanOps",
                         extendClass,
                         className
@@ -344,6 +342,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     classDecl.append(toStringMethod(selfExpr, className, fields));
                 }
 
+                Optional
                 classDecl.append(classDeclEnd);
 
                 try {

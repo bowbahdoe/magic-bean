@@ -12,7 +12,7 @@ Requires Java 17+.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -21,8 +21,8 @@ Requires Java 17+.
 
 ```
 dependencies {
-    compileOnly("dev.mccue:magic-bean:3.2.0")
-    annotationProcessor("dev.mccue:magic-bean:3.2.0")
+    compileOnly("dev.mccue:magic-bean:3.3.0")
+    annotationProcessor("dev.mccue:magic-bean:3.3.0")
 }
 ```
 

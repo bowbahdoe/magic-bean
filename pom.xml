@@ -6,7 +6,7 @@
 
   <groupId>dev.mccue</groupId>
   <artifactId>magic-bean</artifactId>
-  <version>3.2.0</version>
+  <version>3.3.0</version>
   <packaging>jar</packaging>
 
   <properties>
