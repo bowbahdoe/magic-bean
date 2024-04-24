@@ -332,7 +332,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     classDecl.append(equalsAndHashCodeMethods(selfExpr, className, fields));
                 }
 
-                if (annotation.toString()) {
+                if (annotation.toString_()) {
                     classDecl.append(toStringMethod(selfExpr, className, fields));
                 }
 
