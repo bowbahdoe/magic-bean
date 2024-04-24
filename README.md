@@ -2,7 +2,7 @@
 
 <img src="./logo.png"></img>
 
-A very basic library which will generate POJOs. 
+A very basic library which will generate getters and setters.
 
 Requires Java 21+.
 
