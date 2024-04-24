@@ -229,6 +229,7 @@ sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
 
 ## Usage with frameworks
 ### [JPA / Hibernate](./usage/jpa.md)
+### [Rife2](./usage/rife2.md)
 
 
 ## Customizing
