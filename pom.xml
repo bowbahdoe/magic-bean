@@ -14,7 +14,7 @@
   </properties>
 
   <name>Magic Bean</name>
-  <description>A very basic library which will generate POJOs.</description>
+  <description>A very basic library which will generate getters and setters.</description>
   <url>https://github.com/bowbahdoe/magic-bean</url>
 
   <developers>
@@ -138,4 +138,45 @@
       </plugin>
     </plugins>
   </build>
+
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jreleaser</groupId>
+            <artifactId>jreleaser-maven-plugin</artifactId>
+            <version>1.11.0</version>
+            <configuration>
+              <jreleaser>
+                <project>
+                  <copyright>2024</copyright>
+                  <versionPattern><type>CHRONVER</type></versionPattern>
+                </project>
+                <signing>
+                  <active>ALWAYS</active>
+                  <armored>true</armored>
+                </signing>
+                <deploy>
+                  <maven>
+                    <nexus2>
+                      <maven-central>
+                        <active>ALWAYS</active>
+                        <url>https://s01.oss.sonatype.org/service/local</url>;
+                        <closeRepository>true</closeRepository>
+                        <releaseRepository>true</releaseRepository>
+                        <stagingRepositories>target/staging-deploy</stagingRepositories>
+                      </maven-central>
+                    </nexus2>
+                  </maven>
+                </deploy>
+              </jreleaser>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
