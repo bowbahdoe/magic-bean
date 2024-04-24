@@ -58,26 +58,19 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface MagicBean {
     /**
-     * Will require --enable-preview on java 17.
-     *
-     * @return Whether to Use a CUPS expression instead of a normal cast.
-     */
-    boolean useTypeSafeCast() default false;
-
-    /**
      * @return Whether to generate an all args static factory method.
      */
-    boolean generateAllArgsStaticFactory() default false;
+    boolean allArgsStaticFactory() default false;
 
     /**
      * @return Whether to generate an equals and hash code implementation.
      */
-    boolean generateEqualsAndHashCode() default false;
+    boolean equalsAndHashCode() default false;
 
     /**
      * @return Whether to generate a basic toString.
      */
-    boolean generateToString() default false;
+    boolean toString_() default false;
 
     /**
      * @return A class for the generated abstract class to extend. Does not support

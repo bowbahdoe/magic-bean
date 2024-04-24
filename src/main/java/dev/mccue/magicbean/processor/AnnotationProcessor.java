@@ -225,7 +225,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                         );
 
                 var annotation = typeElement.getAnnotation(MagicBean.class);
-                if (annotation.generateAllArgsStaticFactory() && !hasValidConstructor) {
+                if (annotation.allArgsStaticFactory() && !hasValidConstructor) {
                     messager.printMessage(
                             Diagnostic.Kind.ERROR,
                             "Magic beans need to have a non-private zero arg constructor in order for a factory method to be generated.",
@@ -255,14 +255,9 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 }
 
 
-                String selfExpr;
-                if (typeElement.getAnnotation(MagicBean.class).useTypeSafeCast()) {
-                    selfExpr = "(switch (this) { case %s __ -> __; })".formatted(className);
-                } else {
-                    selfExpr = "((%s) this)".formatted(className);
-                }
+                String selfExpr = "(switch (this) { case %s __ -> __; })".formatted(className);
 
-                boolean requiresFinalClass = annotation.generateEqualsAndHashCode();
+                boolean requiresFinalClass = annotation.equalsAndHashCode();
 
                 if (requiresFinalClass && !typeElement.getModifiers().contains(Modifier.FINAL)) {
                     messager.printMessage(
@@ -322,7 +317,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 classDecl.append(packageDecl);
                 classDecl.append(classDeclStart);
 
-                if (annotation.generateAllArgsStaticFactory()) {
+                if (annotation.allArgsStaticFactory()) {
                     classDecl.append(staticFactoryMethod(className, fields));
                 }
 
@@ -333,11 +328,11 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     ));
                 }
 
-                if (annotation.generateEqualsAndHashCode()) {
+                if (annotation.equalsAndHashCode()) {
                     classDecl.append(equalsAndHashCodeMethods(selfExpr, className, fields));
                 }
 
-                if (annotation.generateToString()) {
+                if (annotation.toString()) {
                     classDecl.append(toStringMethod(selfExpr, className, fields));
                 }
 

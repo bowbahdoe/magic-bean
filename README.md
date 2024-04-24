@@ -4,7 +4,7 @@
 
 A very basic library which will generate POJOs. 
 
-Requires Java 17+.
+Requires Java 21+.
 
 ### Maven
 
@@ -12,7 +12,7 @@ Requires Java 17+.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>3.3.0</version>
+    <version>2024.04.24</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -21,8 +21,8 @@ Requires Java 17+.
 
 ```
 dependencies {
-    compileOnly("dev.mccue:magic-bean:3.3.0")
-    annotationProcessor("dev.mccue:magic-bean:3.3.0")
+    compileOnly("dev.mccue:magic-bean:2024.04.24")
+    annotationProcessor("dev.mccue:magic-bean:2024.04.24")
 }
 ```
 
@@ -124,9 +124,9 @@ import dev.mccue.magicbean.MagicBean;
 import java.util.List;
 
 @MagicBean(
-        generateAllArgsStaticFactory = true,
-        generateEqualsAndHashCode = true,
-        generateToString = true
+        allArgsStaticFactory = true,
+        equalsAndHashCode = true,
+        toString_ = true
 )
 public final class Example extends ExampleBeanOps {
     int x;
