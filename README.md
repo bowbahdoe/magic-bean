@@ -32,7 +32,7 @@ This uses an annotation processor to generate a class which can
 be extended to automatically derive the boilerplate code for 
 - getters and setters
 - equals and hashCode
-- toString
+- `toString()`
 - an all argument constructor
 
 The primary goals of this library are
