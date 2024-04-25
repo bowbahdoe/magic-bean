@@ -23,6 +23,8 @@ import javax.tools.ToolProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import dev.mccue.magicbean.processor.AnnotationProcessor;
 
 class MagicBeanProcessorTest {
@@ -70,7 +72,7 @@ class MagicBeanProcessorTest {
         Files.readString(
             Paths.get("dev/mccue/magicbean/models/valid/ExampleBeanOps.java").toAbsolutePath());
 
-    assert expectedString.equals(generated);
+    assertEquals(expectedString, generated);
   }
 
   String expectedString =
