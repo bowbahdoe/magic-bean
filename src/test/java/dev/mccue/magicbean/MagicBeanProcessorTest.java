@@ -1,5 +1,7 @@
 package dev.mccue.magicbean;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +24,6 @@ import javax.tools.ToolProvider;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import dev.mccue.magicbean.processor.AnnotationProcessor;
 
