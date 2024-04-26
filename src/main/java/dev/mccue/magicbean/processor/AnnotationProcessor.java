@@ -254,8 +254,14 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     packageName = packageElement.toString();
                 }
 
+                String selfMethod = """
+                            private %s self() {
+                                return (switch (this) { case %s __ -> __; });
+                            }
+                        
+                        """.formatted(className, className);
 
-                String selfExpr = "(switch (this) { case %s __ -> __; })".formatted(className);
+                String selfExpr = "self()";
 
                 boolean requiresFinalClass = annotation.equalsAndHashCode();
 
@@ -316,6 +322,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
                 var classDecl = new StringBuilder();
                 classDecl.append(packageDecl);
                 classDecl.append(classDeclStart);
+                classDecl.append(selfMethod);
 
                 if (annotation.allArgsStaticFactory()) {
                     classDecl.append(staticFactoryMethod(className, fields));
