@@ -70,46 +70,50 @@ public final class Example extends ExampleBeanOps {
 ```java
 sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
 
+    private Example self() {
+        return (switch (this) { case Example __ -> __; });
+    }
+
     /**
      * Get the current value for x.
      */
     public int getX() {
-        return (switch (this) { case Example __ -> __; }).x;
+        return self().x;
     }
 
     /**
      * Set the current value for x.
      */
     public void setX(int x) {
-        (switch (this) { case Example __ -> __; }).x = x;
+        self().x = x;
     }
 
     /**
      * Get the current value for name.
      */
     public java.lang.String getName() {
-        return (switch (this) { case Example __ -> __; }).name;
+        return self().name;
     }
 
     /**
      * Set the current value for name.
      */
     public void setName(java.lang.String name) {
-        (switch (this) { case Example __ -> __; }).name = name;
+        self().name = name;
     }
 
     /**
      * Get the current value for strs.
      */
     public java.util.List<java.lang.String> getStrs() {
-        return (switch (this) { case Example __ -> __; }).strs;
+        return self().strs;
     }
 
     /**
      * Set the current value for strs.
      */
     public void setStrs(java.util.List<java.lang.String> strs) {
-        (switch (this) { case Example __ -> __; }).strs = strs;
+        self().strs = strs;
     }
 
 }
@@ -139,6 +143,10 @@ public final class Example extends ExampleBeanOps {
 ```java 
 sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
 
+    private Example self() {
+        return (switch (this) { case Example __ -> __; });
+    }
+
     /**
      * Creates an instance of Example.
      */
@@ -158,42 +166,42 @@ sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
      * Get the current value for x.
      */
     public int getX() {
-        return (switch (this) { case Example __ -> __; }).x;
+        return self().x;
     }
 
     /**
      * Set the current value for x.
      */
     public void setX(int x) {
-        (switch (this) { case Example __ -> __; }).x = x;
+        self().x = x;
     }
 
     /**
      * Get the current value for name.
      */
     public java.lang.String getName() {
-        return (switch (this) { case Example __ -> __; }).name;
+        return self().name;
     }
 
     /**
      * Set the current value for name.
      */
     public void setName(java.lang.String name) {
-        (switch (this) { case Example __ -> __; }).name = name;
+        self().name = name;
     }
 
     /**
      * Get the current value for strs.
      */
     public java.util.List<java.lang.String> getStrs() {
-        return (switch (this) { case Example __ -> __; }).strs;
+        return self().strs;
     }
 
     /**
      * Set the current value for strs.
      */
     public void setStrs(java.util.List<java.lang.String> strs) {
-        (switch (this) { case Example __ -> __; }).strs = strs;
+        self().strs = strs;
     }
 
     @Override
@@ -202,26 +210,26 @@ sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
             return false;
         }
         else {
-            return java.util.Objects.equals((switch (this) { case Example __ -> __; }).x, other.x) &&
-                   java.util.Objects.equals((switch (this) { case Example __ -> __; }).name, other.name) &&
-                   java.util.Objects.equals((switch (this) { case Example __ -> __; }).strs, other.strs);
+            return java.util.Objects.equals(self().x, other.x) &&
+                   java.util.Objects.equals(self().name, other.name) &&
+                   java.util.Objects.equals(self().strs, other.strs);
         }
     }
 
     @Override
     public int hashCode() {
         return java.util.Objects.hash(
-                (switch (this) { case Example __ -> __; }).x,
-                (switch (this) { case Example __ -> __; }).name,
-                (switch (this) { case Example __ -> __; }).strs
+                self().x,
+                self().name,
+                self().strs
         );
     }
 
     @Override
     public String toString() {
-        return "Example[" + "x=" + (switch (this) { case Example __ -> __; }).x +
-               ", " + "name=" + (switch (this) { case Example __ -> __; }).name +
-               ", " + "strs=" + (switch (this) { case Example __ -> __; }).strs + "]";
+        return "Example[" + "x=" + self().x +
+               ", " + "name=" + self().name +
+               ", " + "strs=" + self().strs + "]";
     }
 
 }
