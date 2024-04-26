@@ -1,5 +1,7 @@
 package dev.mccue.magicbean;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -70,7 +72,7 @@ class MagicBeanProcessorTest {
         Files.readString(
             Paths.get("dev/mccue/magicbean/models/valid/ExampleBeanOps.java").toAbsolutePath());
 
-    assert expectedString.equals(generated);
+    assertEquals(expectedString, generated);
   }
 
   String expectedString =
