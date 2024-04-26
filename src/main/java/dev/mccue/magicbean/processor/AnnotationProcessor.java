@@ -55,14 +55,14 @@ public final class AnnotationProcessor extends AbstractProcessor {
             }
         }
         staticFactoryMethod.append("\n    ) {\n");
-        staticFactoryMethod.append("        var o = new %s();\n".formatted(className));
+        staticFactoryMethod.append("        var o$ = new %s();\n".formatted(className));
         for (var field : fields) {
-            staticFactoryMethod.append("        o.set%s(%s);\n".formatted(
+            staticFactoryMethod.append("        o$.set%s(%s);\n".formatted(
                     pascal(field.getSimpleName().toString()),
                     field.getSimpleName()
             ));
         }
-        staticFactoryMethod.append("        return o;\n");
+        staticFactoryMethod.append("        return o$;\n");
         staticFactoryMethod.append("    }\n\n");
         return staticFactoryMethod.toString();
     }
