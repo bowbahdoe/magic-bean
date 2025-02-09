@@ -6,7 +6,7 @@
 
   <groupId>dev.mccue</groupId>
   <artifactId>magic-bean</artifactId>
-  <version>2024.04.26</version>
+  <version>2025.02.09</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -57,6 +57,12 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>dev.mccue</groupId>
+      <artifactId>tools-javac</artifactId>
+      <version>2025.01.21</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

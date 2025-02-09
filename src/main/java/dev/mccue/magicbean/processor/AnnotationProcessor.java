@@ -11,8 +11,10 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -311,8 +313,35 @@ public final class AnnotationProcessor extends AbstractProcessor {
                     extendClass = e.getTypeMirror().toString();
                 }
 
+                var superClass = typeElement.getSuperclass();
+                var generatedClassName = superClass.toString();
+
+                if ("java.lang.Object".equals(generatedClassName)) {
+                    messager.printMessage(
+                            Diagnostic.Kind.ERROR,
+                            "A magic bean must extend a class.",
+                            element
+                    );
+                    return true;
+                }
+
+                if (generatedClassName.contains("<")) {
+                    messager.printMessage(
+                            Diagnostic.Kind.ERROR,
+                            "The class a magic bean extends should not be generic. %s"
+                                    .formatted(generatedClassName),
+                            element
+                    );
+                    return true;
+                }
+
+                if (generatedClassName.contains(".")) {
+                    var split = generatedClassName.split("\\.");
+                    generatedClassName = split[split.length - 1];
+                }
+
                 var classDeclStart = "sealed abstract class %s extends %s permits %s {\n\n".formatted(
-                        className + "BeanOps",
+                        generatedClassName,
                         extendClass,
                         className
                 );
@@ -347,7 +376,7 @@ public final class AnnotationProcessor extends AbstractProcessor {
 
                 try {
                     var file = filer.createSourceFile(
-                            (packageName == null ? "" : packageName + ".") + className + "BeanOps",
+                            (packageName == null ? "" : packageName + ".") + generatedClassName,
                             element
                     );
                     try (var writer = file.openWriter()) {

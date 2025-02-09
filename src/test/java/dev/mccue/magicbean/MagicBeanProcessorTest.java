@@ -22,106 +22,116 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
+import dev.mccue.tools.java.Java;
+import dev.mccue.tools.javac.Javac;
+import dev.mccue.tools.javac.JavacArguments;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dev.mccue.magicbean.processor.AnnotationProcessor;
 
+
 class MagicBeanProcessorTest {
+    Path tempDir = Path.of("testOutput");
 
-  @AfterEach
-  void deleteGeneratedFiles() throws IOException {
-    try {
-      Files.walk(Paths.get("dev").toAbsolutePath())
-          .sorted(Comparator.reverseOrder())
-          .map(Path::toFile)
-          .forEach(File::delete);
-    } catch (final Exception e) {
+    @AfterEach
+    void deleteGeneratedFiles() throws IOException {
+        try {
+            Files.walk(tempDir)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (final Exception e) {
+        }
     }
-  }
 
-  @Test
-  void testGeneration() throws Exception {
-    final String source =
-        Paths.get("src/test/java/dev/mccue/magicbean/models/valid").toAbsolutePath().toString();
+    @BeforeEach
+    void compileProcessor() throws Exception {
+        Javac.run(arguments -> {
+            arguments
+                    ._d(tempDir.resolve("processor"))
+                    ._proc(JavacArguments.Processing.NONE)
+                    .argument(Path.of("src/main/java/dev/mccue/magicbean/processor/AnnotationProcessor.java"))
+                    .argument(Path.of("src/main/java/dev/mccue/magicbean/MagicBean.java"))
+                    .argument(Path.of("src/main/java/module-info.java"));
+        });
+    }
 
-    final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-    final StandardJavaFileManager manager = compiler.getStandardFileManager(null, null, null);
+    @Test
+    void testGeneration() throws Exception {
+        final String source =
+                Paths.get("src/test/resources/Example.java").toAbsolutePath().toString();
 
-    manager.setLocation(StandardLocation.SOURCE_PATH, Arrays.asList(new File(source)));
+        Javac.run(arguments -> {
+            arguments
+                    .__release(Integer.getInteger("java.specification.version"))
+                    ._s(tempDir.resolve("sources"))
+                    ._d(tempDir.resolve("classes"))
+                    .__module_path(tempDir.resolve("processor"))
+                    .__add_modules("ALL-MODULE-PATH")
+                    .__processor_module_path(tempDir.resolve("processor"))
+                    .argument(source);
+        });
 
-    final Set<Kind> fileKinds = Collections.singleton(Kind.SOURCE);
+        var generated =
+                Files.readString(
+                        tempDir.resolve("sources/dev/mccue/magicbean/models/valid/ExampleBeanOps.java").toAbsolutePath());
 
-    final Iterable<JavaFileObject> files =
-        manager.list(StandardLocation.SOURCE_PATH, "", fileKinds, true);
+        assertEquals(expectedString, generated);
+    }
 
-    final CompilationTask task =
-        compiler.getTask(
-            new PrintWriter(System.out),
-            null,
-            null,
-            List.of("--release=" + Integer.getInteger("java.specification.version")),
-            null,
-            files);
-    task.setProcessors(Arrays.asList(new AnnotationProcessor()));
-
-    task.call();
-
-    // assert the files are correct by loading them or something idk
-    var generated =
-        Files.readString(
-            Paths.get("dev/mccue/magicbean/models/valid/ExampleBeanOps.java").toAbsolutePath());
-
-    assertEquals(expectedString, generated);
-  }
-
-  String expectedString =
-      """
-	package dev.mccue.magicbean.models.valid;
-
-	sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
-
-	    /**
-	     * Get the current value for x.
-	     */
-	    public int getX() {
-	        return (switch (this) { case Example __ -> __; }).x;
-	    }
-
-	    /**
-	     * Set the current value for x.
-	     */
-	    public void setX(int x) {
-	        (switch (this) { case Example __ -> __; }).x = x;
-	    }
-
-	    /**
-	     * Get the current value for name.
-	     */
-	    public java.lang.String getName() {
-	        return (switch (this) { case Example __ -> __; }).name;
-	    }
-
-	    /**
-	     * Set the current value for name.
-	     */
-	    public void setName(java.lang.String name) {
-	        (switch (this) { case Example __ -> __; }).name = name;
-	    }
-
-	    /**
-	     * Get the current value for strs.
-	     */
-	    public java.util.List<java.lang.String> getStrs() {
-	        return (switch (this) { case Example __ -> __; }).strs;
-	    }
-
-	    /**
-	     * Set the current value for strs.
-	     */
-	    public void setStrs(java.util.List<java.lang.String> strs) {
-	        (switch (this) { case Example __ -> __; }).strs = strs;
-	    }
-
-	}""";
+    String expectedString =
+            """
+                    package dev.mccue.magicbean.models.valid;
+                    
+                    sealed abstract class ExampleBeanOps extends java.lang.Object permits Example {
+                    
+                        private Example self() {
+                            return (switch (this) { case Example __ -> __; });
+                        }
+                    
+                        /**
+                         * Get the current value for x.
+                         */
+                        public int getX() {
+                            return self().x;
+                        }
+                    
+                        /**
+                         * Set the current value for x.
+                         */
+                        public void setX(int x) {
+                            self().x = x;
+                        }
+                    
+                        /**
+                         * Get the current value for name.
+                         */
+                        public java.lang.String getName() {
+                            return self().name;
+                        }
+                    
+                        /**
+                         * Set the current value for name.
+                         */
+                        public void setName(java.lang.String name) {
+                            self().name = name;
+                        }
+                    
+                        /**
+                         * Get the current value for strs.
+                         */
+                        public java.util.List<java.lang.String> getStrs() {
+                            return self().strs;
+                        }
+                    
+                        /**
+                         * Set the current value for strs.
+                         */
+                        public void setStrs(java.util.List<java.lang.String> strs) {
+                            self().strs = strs;
+                        }
+                    
+                    }""";
 }

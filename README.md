@@ -12,7 +12,7 @@ Requires Java 21+.
 <dependency>
     <groupId>dev.mccue</groupId>
     <artifactId>magic-bean</artifactId>
-    <version>2024.04.26</version>
+    <version>2025.02.09</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -21,8 +21,8 @@ Requires Java 21+.
 
 ```
 dependencies {
-    compileOnly("dev.mccue:magic-bean:2024.04.26")
-    annotationProcessor("dev.mccue:magic-bean:2024.04.26")
+    compileOnly("dev.mccue:magic-bean:2025.02.09")
+    annotationProcessor("dev.mccue:magic-bean:2025.02.09")
 }
 ```
 
